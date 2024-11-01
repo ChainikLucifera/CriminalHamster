@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CriminalFragment">
+    tools:context=".ui.CriminalFragment">
 
     <TextView
         style="?android:listSeparatorTextViewStyle"
@@ -34,6 +34,14 @@
 
         <Button
             android:id="@+id/crimeDateBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:backgroundTint="@color/gray"
+            app:cornerRadius="2dp"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/crimeTimeBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"

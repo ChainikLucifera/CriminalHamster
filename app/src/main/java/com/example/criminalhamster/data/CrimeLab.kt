@@ -1,7 +1,8 @@
-package com.example.criminalhamster
+package com.example.criminalhamster.data
 
 import android.content.Context
 import android.util.Log
+import com.example.criminalhamster.model.Crime
 import java.util.UUID
 
 class CrimeLab(private val appContext: Context) {

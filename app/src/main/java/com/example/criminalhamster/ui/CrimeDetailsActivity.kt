@@ -1,8 +1,11 @@
-package com.example.criminalhamster
+package com.example.criminalhamster.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.example.criminalhamster.Constants
+import com.example.criminalhamster.R
+import com.example.criminalhamster.data.CrimeLab
 import java.util.UUID
 
 class CrimeDetailsActivity : AppCompatActivity() {

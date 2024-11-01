@@ -1,9 +1,12 @@
-package com.example.criminalhamster
+package com.example.criminalhamster.ui
 
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.criminalhamster.Constants
+import com.example.criminalhamster.Utils
+import com.example.criminalhamster.model.Crime
 import com.example.criminalhamster.databinding.CrimeItemBinding
 
 class CrimeAdapter(val crimes : ArrayList<Crime>) : RecyclerView.Adapter<CrimeAdapter.CrimeViewHolder>() {
@@ -24,7 +27,7 @@ class CrimeAdapter(val crimes : ArrayList<Crime>) : RecyclerView.Adapter<CrimeAd
 
         with(holder.binding){
             crimeTitle.text = crime.getTitle()
-            crimeData.text = crime.getDate().toString()
+            crimeDate.text = Utils.getStringFullDate(crime)
             crimeCheckBox.isChecked = crime.isSolved()
 
             root.setOnClickListener{

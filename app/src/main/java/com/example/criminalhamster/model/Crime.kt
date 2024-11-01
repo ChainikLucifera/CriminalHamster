@@ -1,12 +1,13 @@
-package com.example.criminalhamster
+package com.example.criminalhamster.model
 
+import java.util.Calendar
 import java.util.Date
 import java.util.UUID
 
 class Crime {
     private val id: UUID = UUID.randomUUID()
     private var title: String = ""
-    private var date: Date = Date()
+    private var date: Calendar = Calendar.getInstance()
     private var isSolved: Boolean = false
 
     fun setTitle(title: String) {
@@ -23,7 +24,7 @@ class Crime {
 
     fun getDate() = date
 
-    fun setDate(date: Date){
+    fun setDate(date: Calendar){
        this.date = date
     }
 

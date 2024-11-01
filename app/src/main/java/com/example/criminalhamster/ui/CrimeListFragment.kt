@@ -1,4 +1,4 @@
-package com.example.criminalhamster
+package com.example.criminalhamster.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.RecyclerListener
+import com.example.criminalhamster.model.Crime
+import com.example.criminalhamster.R
+import com.example.criminalhamster.data.CrimeLab
 
 class CrimeListFragment : Fragment() {
     private var crimes = arrayListOf<Crime>()
