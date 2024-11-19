@@ -25,6 +25,12 @@
         <activity
             android:name=".ui.CrimeDetailsActivity"
             android:exported="true">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.CriminalListActivity"
+                />
+
         </activity>
     </application>
 

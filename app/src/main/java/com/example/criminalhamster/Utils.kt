@@ -18,7 +18,7 @@ object Utils {
          if(hour.toInt() < 10) hour = String.format("0%s", hour)
          return "$hour:$minute"
      }
-    fun getStringFullDate(crime: Crime): String{
+    fun getStringFullDate(crime: Crime): String {
         return getStringDateOfCrime(crime) + " - " + getStringTimeOfCrime(crime)
     }
 }

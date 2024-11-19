@@ -26,7 +26,10 @@ class CrimeAdapter(val crimes : ArrayList<Crime>) : RecyclerView.Adapter<CrimeAd
         val crime = crimes[position]
 
         with(holder.binding){
-            crimeTitle.text = crime.getTitle()
+            if(crime.getTitle().length < 30)
+                crimeTitle.text = crime.getTitle()
+            else
+                crimeTitle.text = crime.getTitle().substring(0,29) + "..."
             crimeDate.text = Utils.getStringFullDate(crime)
             crimeCheckBox.isChecked = crime.isSolved()
 

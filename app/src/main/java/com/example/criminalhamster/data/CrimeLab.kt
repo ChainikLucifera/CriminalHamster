@@ -10,13 +10,7 @@ class CrimeLab(private val appContext: Context) {
     private val crimes = arrayListOf<Crime>()
 
     init {
-        for (i in 1..100) {
-            val crime = Crime()
-            crime.setTitle("Crime #$i")
-            crime.setSolved(i % 2 == 0)
-            crimes.add(crime)
-            Log.d("TEST", crime.getId().toString())
-        }
+
     }
 
     fun getCrimes() = crimes
@@ -27,6 +21,10 @@ class CrimeLab(private val appContext: Context) {
                 return crime
         }
         return null
+    }
+
+    fun addCrime(crime: Crime){
+        crimes.add(crime)
     }
 
     companion object {
