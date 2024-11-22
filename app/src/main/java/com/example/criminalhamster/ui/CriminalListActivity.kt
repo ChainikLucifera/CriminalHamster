@@ -12,12 +12,20 @@ import com.example.criminalhamster.data.CrimeLab
 import com.example.criminalhamster.model.Crime
 
 class CriminalListActivity : AppCompatActivity() {
+
+    private var subtitleVisibility = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_criminal_list)
 
         val toolBar: Toolbar = findViewById(R.id.toolBar)
         setSupportActionBar(toolBar)
+
+        if(savedInstanceState != null)
+            subtitleVisibility = savedInstanceState.getBoolean(SUBTITLE_VISIBILITY, false)
+        if(subtitleVisibility) supportActionBar?.subtitle = getString(R.string.subtitle)
+        else supportActionBar?.subtitle = null
 
         supportFragmentManager
             .beginTransaction()
@@ -27,6 +35,11 @@ class CriminalListActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.crime_menu, menu)
+
+        val showSubtitleBtn = menu?.findItem(R.id.menuItemShowSubtitle)
+        if(subtitleVisibility) showSubtitleBtn?.title = getString(R.string.hide_sub)
+        else showSubtitleBtn?.title = getString(R.string.show_sub)
+
         return true
     }
 
@@ -41,7 +54,29 @@ class CriminalListActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
+            R.id.menuItemShowSubtitle -> {
+                if(supportActionBar?.subtitle == null) {
+                    supportActionBar?.subtitle = getString(R.string.subtitle)
+                    item.title = getString(R.string.hide_sub)
+                    subtitleVisibility = true
+                }
+                else
+                {
+                    supportActionBar?.subtitle = null
+                    item.title = getString(R.string.show_sub)
+                    subtitleVisibility = false
+                }
+            }
         }
         return true
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(SUBTITLE_VISIBILITY, subtitleVisibility)
+    }
+
+    companion object{
+        const val SUBTITLE_VISIBILITY = "SUBTITLE_VISIBILITY"
     }
 }
