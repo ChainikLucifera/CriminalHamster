@@ -76,6 +76,11 @@ class CriminalListActivity : AppCompatActivity() {
         outState.putBoolean(SUBTITLE_VISIBILITY, subtitleVisibility)
     }
 
+    override fun onPause() {
+        CrimeLab.getInstance(this).saveCrimes()
+        super.onPause()
+    }
+
     companion object{
         const val SUBTITLE_VISIBILITY = "SUBTITLE_VISIBILITY"
     }
