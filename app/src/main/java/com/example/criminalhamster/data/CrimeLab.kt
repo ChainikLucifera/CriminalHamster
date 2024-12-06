@@ -32,6 +32,10 @@ class CrimeLab(private val appContext: Context) {
         crimes.add(crime)
     }
 
+    fun deleteCrime(crime: Crime){
+        crimes.remove(crime)
+    }
+
     fun saveCrimes():Boolean{
         try {
             serializer.saveCrimes(crimes)
