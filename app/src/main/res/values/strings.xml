@@ -10,4 +10,10 @@
     <string name="hide_sub" translatable="false">Hide Subtitle</string>
     <string name="subtitle" translatable="false">If you see smth, say smth.</string>
     <string name="delete_crime" translatable="false">Delete</string>
+
+    <string name="take" translatable="false">Take new one!</string>
+    <string name="save" translatable="false">SAVE IT!!</string>
+    <string name="back" translatable="false">back.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

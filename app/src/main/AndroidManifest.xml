@@ -13,6 +13,9 @@
         android:theme="@style/Theme.CriminalHamster"
         tools:targetApi="31">
         <activity
+            android:name=".ui.CrimeCameraActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.CriminalListActivity"
             android:exported="true">
             <intent-filter>
@@ -21,17 +24,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.CrimeDetailsActivity"
             android:exported="true">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.CriminalListActivity"
-                />
-
+                android:value=".ui.CriminalListActivity" />
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.criminalhamster.ui.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+
+        </provider>
     </application>
 
 </manifest>

@@ -14,6 +14,7 @@ class Crime {
     private var date: Calendar = Calendar.getInstance()
     private var isSolved: Boolean = false
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    private var photo: Photo? = null
 
     constructor(json: JSONObject):this(){
         id = UUID.fromString(json.getString(ID))
@@ -22,6 +23,8 @@ class Crime {
         date = Calendar.getInstance().apply {
             time = dateFormat.parse(json.getString(DATE)) ?: Date()
         }
+        if(json.has(PHOTO))
+            photo = Photo(json.getJSONObject(PHOTO))
     }
 
     constructor()
@@ -40,6 +43,12 @@ class Crime {
 
     fun getDate() = date
 
+    fun getPhoto() = photo
+
+    fun setPhoto(photo: Photo){
+        this.photo = photo
+    }
+
     fun setDate(date: Calendar){
        this.date = date
     }
@@ -55,10 +64,9 @@ class Crime {
         json.put(ID, id)
         json.put(SOLVED, isSolved)
         json.put(TITLE, title)
-
-
-
         json.put(DATE, dateFormat.format(date.time))
+        if(photo != null)
+            json.put(PHOTO, photo!!.toJson())
 
         return json
     }
@@ -68,5 +76,6 @@ class Crime {
         const val SOLVED = "SOLVED"
         const val TITLE = "TITLE"
         const val DATE = "DATE"
+        const val PHOTO = "PHOTO"
     }
 }
