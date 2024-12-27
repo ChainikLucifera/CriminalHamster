@@ -14,6 +14,4 @@
     <string name="take" translatable="false">Take new one!</string>
     <string name="save" translatable="false">SAVE IT!!</string>
     <string name="back" translatable="false">back.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
