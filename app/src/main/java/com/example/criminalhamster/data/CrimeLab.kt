@@ -39,7 +39,8 @@ class CrimeLab(private val appContext: Context) {
     fun saveCrimes():Boolean{
         try {
             serializer.saveCrimes(crimes)
-            Log.d("TEST", "Saved suck")
+            Log.d("TEST", "Saved successful")
+            Log.d("TEST", crimes.toString())
             return true
         }
         catch (e : Exception){

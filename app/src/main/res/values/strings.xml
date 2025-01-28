@@ -14,4 +14,19 @@
     <string name="take" translatable="false">Take new one!</string>
     <string name="save" translatable="false">SAVE IT!!</string>
     <string name="back" translatable="false">back.</string>
+
+    <string name="suspect_text" translatable="false">Choose suspect</string>
+    <string name="report_text" translatable="false">Send crime report</string>
+
+    <string name="crime_report" translatable="false">%1$s!
+    The crime was discovered on %2$s! %3$s, and %4$s
+    </string>
+
+    <string name="crime_report_solved">The case is solved</string>
+    <string name="crime_report_unsolved">The case is not solved</string>
+    <string name="crime_report_no_suspect">There is no suspect.</string>
+    <string name="crime_report_suspect">The suspect is %1$s.</string>
+    <string name="crime_report_subject">CriminalManager Crime Report</string>
+    <string name="send_report">Send crime report via</string>
+
 </resources>

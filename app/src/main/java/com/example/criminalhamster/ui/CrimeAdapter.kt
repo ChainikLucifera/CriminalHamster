@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.criminalhamster.Constants
 import com.example.criminalhamster.Utils
-import com.example.criminalhamster.model.Crime
 import com.example.criminalhamster.databinding.CrimeItemBinding
+import com.example.criminalhamster.model.Crime
 
 //class CrimeAdapter(val crimes : ArrayList<Crime>, private val listener: OnCrimeLongClickListener) : RecyclerView.Adapter<CrimeAdapter.CrimeViewHolder>() {
 class CrimeAdapter(
@@ -16,6 +16,8 @@ class CrimeAdapter(
     private val onItemClick: (Int) -> Unit
 ) :
     RecyclerView.Adapter<CrimeAdapter.CrimeViewHolder>() {
+
+
     class CrimeViewHolder(val binding: CrimeItemBinding) : RecyclerView.ViewHolder(binding.root) {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CrimeViewHolder {
@@ -55,7 +57,6 @@ class CrimeAdapter(
         }
 
     }
-
 }
 
 
