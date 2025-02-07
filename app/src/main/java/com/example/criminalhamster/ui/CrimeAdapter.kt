@@ -13,7 +13,8 @@ import com.example.criminalhamster.model.Crime
 //class CrimeAdapter(val crimes : ArrayList<Crime>, private val listener: OnCrimeLongClickListener) : RecyclerView.Adapter<CrimeAdapter.CrimeViewHolder>() {
 class CrimeAdapter(
     val crimes: ArrayList<Crime>,
-    private val onItemClick: (Int) -> Unit
+    private val onItemClick: (String) -> Unit,
+    private val onLongItemClick: (Int) -> Unit
 ) :
     RecyclerView.Adapter<CrimeAdapter.CrimeViewHolder>() {
 
@@ -41,15 +42,11 @@ class CrimeAdapter(
             crimeCheckBox.isChecked = crime.isSolved()
 
             root.setOnClickListener {
-                val intent = Intent(root.context, CrimeDetailsActivity::class.java)
-                intent.putExtra(Constants.CRIMINAL_ID, crime.getId().toString())
-                root.context.startActivity(intent)
+                onItemClick(crime.getId().toString())
             }
 
             root.setOnLongClickListener {
-                Log.d("TEST", "LONGCLICK")
-
-                onItemClick(position)
+                onLongItemClick(position)
 
                 //listener.onCrimeLongClick()
                 true

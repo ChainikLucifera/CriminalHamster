@@ -100,7 +100,8 @@ class CriminalFragment : Fragment() {
                             Log.e("TEST_ERROR", "No phone number is connected to this person")
                         }
                         Log.d("TEST", "$contactName, $contactID, $phoneNumber")
-                        binding.suspectBtn.text = getString(R.string.crime_report_suspect, contactName)
+                        binding.suspectBtn.text =
+                            getString(R.string.crime_report_suspect, contactName)
                         crime.setSuspect(contactName)
                     } else {
                         Log.e("TEST_ERROR", "Phone cursor is null or empty")
@@ -150,14 +151,14 @@ class CriminalFragment : Fragment() {
 
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     crime.setTitle(p0.toString())
-                    Toast.makeText(this@CriminalFragment.context, p0.toString(), Toast.LENGTH_SHORT)
-                        .show()
+                    onDataChanged()
                 }
 
                 override fun afterTextChanged(p0: Editable?) {}
             })
             crimeIsSolved.setOnCheckedChangeListener { btnView, isChecked ->
                 crime.setSolved(isChecked)
+                onDataChanged()
             }
 
 
@@ -172,6 +173,7 @@ class CriminalFragment : Fragment() {
                     crime.getDate().get(Calendar.MONTH),
                     crime.getDate().get(Calendar.DAY_OF_MONTH)
                 ).show()
+
             }
             crimeTimeBtn.setOnClickListener {
                 TimePickerDialog(
@@ -206,11 +208,13 @@ class CriminalFragment : Fragment() {
             }
 
             suspectBtn.setOnClickListener {
-                if(ContextCompat.checkSelfPermission(requireContext(),
-                        Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED){
+                if (ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.READ_CONTACTS
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
                     pickContactLauncher.launch(null)
-                }
-                else{
+                } else {
                     requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
                 }
             }
@@ -238,18 +242,23 @@ class CriminalFragment : Fragment() {
     }
 
     private fun updateScreenData() {
-        with(binding){
+        with(binding) {
+
             crimeIsSolved.isChecked = crime.isSolved()
             crimeTitle.setText(crime.getTitle())
             crimeDateBtn.text = Utils.getStringDateOfCrime(crime)
             crimeTimeBtn.text = Utils.getStringTimeOfCrime(crime)
+
             Log.d("TEST", "Update screen data")
-            if(crime.getSuspect() != null){
-                binding.suspectBtn.text = getString(R.string.crime_report_suspect, crime.getSuspect())
-            }
-            else{
+
+            if (crime.getSuspect() != null) {
+                binding.suspectBtn.text =
+                    getString(R.string.crime_report_suspect, crime.getSuspect())
+            } else {
                 binding.suspectBtn.text = getString(R.string.suspect_text)
             }
+
+            onDataChanged()
         }
     }
 
@@ -257,10 +266,12 @@ class CriminalFragment : Fragment() {
     private val dateSetListener: DatePickerDialog.OnDateSetListener =
         DatePickerDialog.OnDateSetListener { view, year, month, day ->
             updateCrimeDate(year, month, day)
+            onDataChanged()
         }
     private val timeSetListener: OnTimeSetListener =
         OnTimeSetListener { view, hour, minute ->
             updateCrimeTime(hour, minute)
+            onDataChanged()
         }
 
     private fun updateCrimeDate(year: Int, month: Int, day: Int) {
@@ -312,13 +323,23 @@ class CriminalFragment : Fragment() {
         super.onPause()
         CrimeLab.getInstance(requireContext()).saveCrimes()
     }
+
     companion object {
+        private lateinit var onDataChanged: () -> Unit
+
         @JvmStatic
-        fun newInstance(crimeID: String): CriminalFragment {
+        fun newInstance(
+            crimeID: String,
+            onDataChanged: () -> Unit = {}
+        ): CriminalFragment {
+            this.onDataChanged = onDataChanged
+
             val args = Bundle()
             args.putString(Constants.CRIMINAL_ID, crimeID)
+
             val fragment = CriminalFragment()
             fragment.arguments = args
+
             return fragment
         }
     }

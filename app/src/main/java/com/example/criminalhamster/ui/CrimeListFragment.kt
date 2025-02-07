@@ -1,17 +1,19 @@
 package com.example.criminalhamster.ui
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.ContextMenu
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.example.criminalhamster.model.Crime
+import com.example.criminalhamster.Constants
 import com.example.criminalhamster.R
 import com.example.criminalhamster.data.CrimeLab
+import com.example.criminalhamster.model.Crime
 
 //class CrimeListFragment : Fragment(), OnCrimeLongClickListener { - закоменченные это второй способ через interface в адаптере
 class CrimeListFragment : Fragment() {
@@ -19,6 +21,7 @@ class CrimeListFragment : Fragment() {
     private lateinit var adapter: CrimeAdapter
     private lateinit var recyclerView: RecyclerView
     private var selectedPosition: Int? = null
+    public lateinit var detailsFragment: CriminalFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +36,26 @@ class CrimeListFragment : Fragment() {
 
         recyclerView = view.findViewById<RecyclerView>(R.id.crimeRecyclerView)
         //adapter = CrimeAdapter(crimes, this)
-        adapter = CrimeAdapter(crimes) { position ->
-            requireActivity().openContextMenu(recyclerView)
-            selectedPosition = position
-
-        }
+        adapter = CrimeAdapter(
+            crimes = crimes,
+            onItemClick = { id ->
+                if (requireActivity().findViewById<FrameLayout>(R.id.detailedFragmentContainer) != null) {
+                    detailsFragment = CriminalFragment.newInstance(crimeID = id, onDataChanged = {
+                        updateRV()
+                    })
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.detailedFragmentContainer, detailsFragment).commit()
+                } else {
+                    val intent = Intent(requireActivity(), CrimeDetailsActivity::class.java)
+                    intent.putExtra(Constants.CRIMINAL_ID, id)
+                    requireActivity().startActivity(intent)
+                }
+            },
+            onLongItemClick =
+            { position ->
+                requireActivity().openContextMenu(recyclerView)
+                selectedPosition = position
+            })
         recyclerView.adapter = adapter
 
         registerForContextMenu(recyclerView)
@@ -47,7 +65,7 @@ class CrimeListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        adapter.notifyDataSetChanged()
+        updateRV()
     }
 
     override fun onCreateContextMenu(
@@ -60,14 +78,21 @@ class CrimeListFragment : Fragment() {
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.menuItemDeleteCrime ->{
+        when (item.itemId) {
+            R.id.menuItemDeleteCrime -> {
                 val selectedCrime = crimes[selectedPosition!!]
                 CrimeLab.getInstance(requireContext()).deleteCrime(selectedCrime)
-                adapter.notifyDataSetChanged()
+                if (::detailsFragment.isInitialized)
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .remove(detailsFragment).commit()
+                updateRV()
             }
         }
         return super.onContextItemSelected(item)
+    }
+
+    fun updateRV() {
+        adapter.notifyDataSetChanged()
     }
 
     companion object {
